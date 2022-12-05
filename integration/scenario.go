@@ -468,3 +468,23 @@ func (s *Scenario) ListTailscaleClientsFQDNs(namespaces ...string) ([]string, er
 
 	return allFQDNs, nil
 }
+
+func (s *Scenario) ListTailscaleExtraRecords(namespaces ...string) ([]string, error) {
+	extraRecords := make([]string, 0)
+
+	clients, err := s.ListTailscaleClients(namespaces...)
+	if err != nil {
+		return nil, err
+	}
+
+	for _, client := range clients {
+		fqdn, err := client.FQDN()
+		if err != nil {
+			return nil, err
+		}
+
+		extraRecords = append(extraRecords, fqdn)
+	}
+
+	return extraRecords, nil
+}

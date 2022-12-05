@@ -5,6 +5,7 @@ import (
 	"net/url"
 
 	"tailscale.com/ipn/ipnstate"
+	"tailscale.com/tailcfg"
 )
 
 //nolint
@@ -22,4 +23,5 @@ type TailscaleClient interface {
 	WaitForPeers(expected int) error
 	Ping(hostnameOrIP string) error
 	ID() string
+	ExtraRecords() ([]tailcfg.DNSRecord, error)
 }

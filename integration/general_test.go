@@ -291,6 +291,11 @@ func TestResolveMagicDNS(t *testing.T) {
 		t.Errorf("failed to get clients: %s", err)
 	}
 
+	extraRecords, err := scenario.ListTailscaleExtraRecords()
+	if err != nil {
+		t.Errorf("failed to get the extra DNS records: %s", err)
+	}
+
 	err = scenario.WaitForTailscaleSync()
 	if err != nil {
 		t.Errorf("failed wait for tailscale clients to be in sync: %s", err)
@@ -340,6 +345,12 @@ func TestResolveMagicDNS(t *testing.T) {
 					t.Errorf("ip %s is not found in \n%s\n", ip.String(), result)
 				}
 			}
+		}
+	}
+
+	for _, client := range allClients {
+		for _, extraRecord := range extraRecords {
+			client.Ping(extraRecord)
 		}
 	}
 

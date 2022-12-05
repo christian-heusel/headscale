@@ -145,6 +145,7 @@ func (*Suite) TestDNSConfigLoading(c *check.C) {
 	c.Assert(dnsConfig.Nameservers[0].String(), check.Equals, "1.1.1.1")
 	c.Assert(dnsConfig.Resolvers[0].Addr, check.Equals, "1.1.1.1")
 	c.Assert(dnsConfig.Proxied, check.Equals, true)
+	c.Assert(dnsConfig.ExtraRecords, check.HasLen, 0)
 	c.Assert(baseDomain, check.Equals, "example.com")
 }
 
